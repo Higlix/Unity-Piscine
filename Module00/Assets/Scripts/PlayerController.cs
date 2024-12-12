@@ -74,6 +74,7 @@ public class PlayerController : MonoBehaviour
 
 	private void killPlayer()
 	{
+		Debug.Log("GAME OVER");
 		Destroy(gameObject);
 	}
 
