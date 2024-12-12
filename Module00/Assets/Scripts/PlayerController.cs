@@ -23,10 +23,14 @@ public class PlayerController : MonoBehaviour
 	public LayerMask whatIsGround;
 	bool grounded;
 
+	[Header("Player Transform")]
 	public Transform orientation;
 
 	float horizontalInput;
 	float verticalInput;
+
+	[Header("Death Layer ID")]
+	public int lavaLayerID = 11;
 
 	Vector3 moveDirection;
 
@@ -58,6 +62,19 @@ public class PlayerController : MonoBehaviour
 		{
 			rb.linearDamping = 0;
 		}
+	}
+
+	void OnCollisionEnter(Collision collision)
+	{
+		if (collision.gameObject.layer == lavaLayerID)
+		{
+			killPlayer();
+		}
+	}
+
+	private void killPlayer()
+	{
+		Destroy(gameObject);
 	}
 
 	private void HandleInput()

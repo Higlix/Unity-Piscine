@@ -10,6 +10,5 @@ public class CamMove : MonoBehaviour
     {
 		cameraPosition.position = transform.position;
 		//cameraPosition.rotation = transform.rotation;
-		cameraPosition.LookAt(transform.position);
     }
 }
