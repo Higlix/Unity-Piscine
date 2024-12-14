@@ -9,15 +9,16 @@ public class PlayerMovement : MonoBehaviour
     private float jumpHeight;
     private float movementSpeed;
     private float maxSpeed;
-    private float dragForce = 2f;
-    private bool canMove = false;
+    private float dragForce = 20f;
+    public int ID = -1;
+    public bool canMove = false;
     Rigidbody rb;
     public void Start()
     {
         Debug.Log("Start()");
         jumpHeight = 6f;
-        movementSpeed = 5f;
-        maxSpeed = 10f;
+        movementSpeed = 25f;
+        maxSpeed = 25f;
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
     }
@@ -45,11 +46,12 @@ public class PlayerMovement : MonoBehaviour
     {
         if (canMove)
         {
+            rb.WakeUp();
             float horizontalInput = Input.GetAxisRaw("Horizontal");
-            
+
             if (horizontalInput != 0)
             {
-                rb.AddForce(Vector3.right * horizontalInput * movementSpeed, ForceMode.Acceleration);
+                rb.AddForce(transform.right * horizontalInput * movementSpeed, ForceMode.Acceleration);
 
                 LimitVelocity();
             }
@@ -58,11 +60,11 @@ public class PlayerMovement : MonoBehaviour
 
             //if (Input.GetKey(KeyCode.D))
             //{
-            //    rb.AddForce(transform.right * movementSpeed, ForceMode.Acceleration);
+            //    rb.Move(new Vector3(transform.position.x + (Time.deltaTime * movementSpeed), transform.position.y, -19f), rb.rotation);
             //}
             //if (Input.GetKey(KeyCode.A))
-            //{ 
-            //    rb.AddForce(-transform.right * movementSpeed, ForceMode.Acceleration);
+            //{
+            //    rb.Move(new Vector3(transform.position.x - (Time.deltaTime * movementSpeed), transform.position.y, -19f), rb.rotation);
             //}
             //if (Input.GetKey(KeyCode.Space))
             //{
@@ -71,6 +73,32 @@ public class PlayerMovement : MonoBehaviour
             //}
         }
         transform.position = new Vector3(transform.position.x, transform.position.y, -19f);
+    }
+
+    private void givePush(PlayerMovement otherCharacter)
+    {
+        float horizontalInput = Input.GetAxisRaw("Horizontal");
+
+        if (horizontalInput != 0)
+            otherCharacter.rb.AddForce(transform.right * horizontalInput * movementSpeed, ForceMode.Acceleration);
+
+    }
+
+    private void OnCollisionStay(Collision collision)
+    {
+        PlayerMovement otherCharacter = collision.gameObject.GetComponent<PlayerMovement>();
+        if (otherCharacter != null)
+        {
+            if (!otherCharacter.canMove && !this.canMove)
+            {
+                givePush(otherCharacter);
+            }
+        }
+    }
+
+    public void setID(int id)
+    {
+        ID = id;
     }
 
     public void setJumpHeight(float newHeight)

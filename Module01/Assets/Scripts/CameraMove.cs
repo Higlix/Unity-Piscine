@@ -40,16 +40,19 @@ public class CameraMove : MonoBehaviour
         {
             players[0] = player1GO.GetComponent<Transform>();
             PlayerController1 = player1GO.GetComponent<PlayerMovement>();
+            PlayerController1.setID(1);
         }
         if (player2GO)
         {
             players[1] = player2GO.GetComponent<Transform>();
             PlayerController2 = player2GO.GetComponent<PlayerMovement>();
+            PlayerController2.setID(2);
         }
         if (player3GO)
         {
             players[2] = player3GO.GetComponent<Transform>();
             PlayerController3 = player3GO.GetComponent<PlayerMovement>();
+            PlayerController3.setID(3);
         }
         transform.position = new Vector3(-16f, 7.5f, -27f);
     }
