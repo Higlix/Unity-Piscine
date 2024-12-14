@@ -11,6 +11,9 @@ public class PlayerContoller : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.D))
+        {
+            transform.position.x += (Time.deltaTime * 2f);
+        }
     }
 }
