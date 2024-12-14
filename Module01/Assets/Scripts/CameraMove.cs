@@ -11,8 +11,11 @@ public class CameraMove : MonoBehaviour
     public Transform player1Transform;
     public Transform player2Transform;
     public Transform player3Transform;
-
+    
+    [Header("Player GameObjects")]
     public GameObject player1GO;
+    public GameObject player2GO;
+    public GameObject player3GO;
 
     [Header("Camera Movement Speed")]
     public float movementSpeed;
@@ -27,7 +30,9 @@ public class CameraMove : MonoBehaviour
         Player2 = 1,
         Player3 = 2,
     }
-
+    private PlayerContoller PlayerController1;
+    private PlayerContoller PlayerController2;
+    private PlayerContoller PlayerController3;
     private Transform[] players = new Transform[3];
 
     private playerID currentPlayer = playerID.PlayerNone;
@@ -44,6 +49,9 @@ public class CameraMove : MonoBehaviour
             players[1] = player2Transform;
         if (player3Transform)
             players[2] = player3Transform;
+        PlayerController1 = player1GO.GetComponent<PlayerContoller>();
+        PlayerController2 = player2GO.GetComponent<PlayerContoller>();
+        PlayerController3 = player3GO.GetComponent<PlayerContoller>();
         transform.position = new Vector3(-16f, 7.5f, -27f);
     }
 
@@ -63,6 +71,9 @@ public class CameraMove : MonoBehaviour
             //    Time.deltaTime * movementSpeed
             //);
             currentPlayer = playerID.Player1;
+            PlayerController1.enabled = true;
+            PlayerController2.enabled = false;
+            PlayerController3.enabled = false;
         }
         if (Input.GetKeyDown(player2))
         {
@@ -72,6 +83,9 @@ public class CameraMove : MonoBehaviour
             //    Time.deltaTime * movementSpeed
             //);
             currentPlayer = playerID.Player2;
+            PlayerController1.enabled = false;
+            PlayerController2.enabled = true;
+            PlayerController3.enabled = false;
         }
         if (Input.GetKeyDown(player3))
         {
@@ -81,6 +95,9 @@ public class CameraMove : MonoBehaviour
             //    Time.deltaTime * movementSpeed
             //);
             currentPlayer = playerID.Player3;
+            PlayerController1.enabled = false;
+            PlayerController2.enabled = false;
+            PlayerController3.enabled = true;
         }
         if (currentPlayer != playerID.PlayerNone)
         {
