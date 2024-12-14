@@ -1,11 +1,15 @@
 using UnityEngine;
 
-public class PlayerContoller : MonoBehaviour
+public class PlayerMovement : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
+
+    private float jumpHeight;
+
     Rigidbody rb;
     void Start()
     {
+        jumpHeight = 2f;
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
     }
@@ -23,7 +27,12 @@ public class PlayerContoller : MonoBehaviour
         }
         if (Input.GetKey(KeyCode.Space))
         {
-            transform.position = new Vector3(transform.position.x, transform.position.y + (Time.deltaTime * 2f), -19f);
+            transform.position = new Vector3(transform.position.x, transform.position.y + (Time.deltaTime * jumpHeight), -19f);
         }
+    }
+
+    public void setJumpHeight(float jumpHeight)
+    {
+        jumpHeight = Mathf.Clamp(jumpHeight, 2f, 5f);
     }
 }

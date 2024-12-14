@@ -3,25 +3,17 @@ using UnityEngine.UIElements;
 
 public class CameraMove : MonoBehaviour
 {
-    private KeyCode player1;
-    private KeyCode player2;
-    private KeyCode player3;
-
-    [Header("Player Transforms")]
-    public Transform player1Transform;
-    public Transform player2Transform;
-    public Transform player3Transform;
-    
     [Header("Player GameObjects")]
     public GameObject player1GO;
     public GameObject player2GO;
     public GameObject player3GO;
 
-    [Header("Camera Movement Speed")]
-    public float movementSpeed;
-
     [Header("Camera Y OffSet")]
     public float yOffSet = 2f;
+
+    private KeyCode player1;
+    private KeyCode player2;
+    private KeyCode player3;
 
     private enum playerID
     {
@@ -30,9 +22,10 @@ public class CameraMove : MonoBehaviour
         Player2 = 1,
         Player3 = 2,
     }
-    private PlayerContoller PlayerController1;
-    private PlayerContoller PlayerController2;
-    private PlayerContoller PlayerController3;
+
+    private PlayerMovement PlayerController1;
+    private PlayerMovement PlayerController2;
+    private PlayerMovement PlayerController3;
     private Transform[] players = new Transform[3];
 
     private playerID currentPlayer = playerID.PlayerNone;
@@ -43,15 +36,21 @@ public class CameraMove : MonoBehaviour
         player1 = KeyCode.Alpha1;
         player2 = KeyCode.Alpha2;
         player3 = KeyCode.Alpha3;
-        if (player1Transform)
-            players[0] = player1Transform;
-        if (player2Transform)
-            players[1] = player2Transform;
-        if (player3Transform)
-            players[2] = player3Transform;
-        PlayerController1 = player1GO.GetComponent<PlayerContoller>();
-        PlayerController2 = player2GO.GetComponent<PlayerContoller>();
-        PlayerController3 = player3GO.GetComponent<PlayerContoller>();
+        if (player1GO)
+        {
+            players[0] = player1GO.GetComponent<Transform>();
+            PlayerController1 = player1GO.GetComponent<PlayerMovement>();
+        }
+        if (player2GO)
+        {
+            players[1] = player2GO.GetComponent<Transform>();
+            PlayerController2 = player2GO.GetComponent<PlayerMovement>();
+        }
+        if (player3GO)
+        {
+            players[2] = player3GO.GetComponent<Transform>();
+            PlayerController3 = player3GO.GetComponent<PlayerMovement>();
+        }
         transform.position = new Vector3(-16f, 7.5f, -27f);
     }
 
@@ -103,6 +102,6 @@ public class CameraMove : MonoBehaviour
         {
             transform.position = new Vector3(players[(int)currentPlayer].position.x, players[(int)currentPlayer].position.y + yOffSet, transform.position.z);
         }
-        
+        //transform.position = new Vector3(players[(int)currentPlayer].position.x, players[(int)currentPlayer].position.y + yOffSet, -19f);
     }
 }
