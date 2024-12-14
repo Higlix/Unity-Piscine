@@ -1,3 +1,5 @@
+using Mono.Cecil.Cil;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -5,36 +7,79 @@ public class PlayerMovement : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
     private float jumpHeight;
-
+    private float movementSpeed;
+    private float maxSpeed;
+    private float dragForce = 2f;
+    private bool canMove = false;
     Rigidbody rb;
     public void Start()
     {
         Debug.Log("Start()");
-        jumpHeight = 2f;
+        jumpHeight = 6f;
+        movementSpeed = 5f;
+        maxSpeed = 10f;
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void LimitVelocity()
     {
-        if (Input.GetKey(KeyCode.D))
+        Vector3 horizontalVelocity = new Vector3(rb.linearVelocity.x, 0, 0);
+
+        if (Mathf.Abs(horizontalVelocity.x) > maxSpeed)
         {
-            transform.position = new Vector3(transform.position.x + (Time.deltaTime * 2f), transform.position.y, -19f);
+            float limitedVelocity = Mathf.Sign(horizontalVelocity.x) * maxSpeed;
+            rb.linearVelocity = new Vector3(limitedVelocity, rb.linearVelocity.y, rb.linearVelocity.z);
         }
-        if (Input.GetKey(KeyCode.A))
+    }
+
+    private void ApplyDrag()
+    {
+        Vector3 velocityDrag = -new Vector3(rb.linearVelocity.x, 0, 0) * dragForce;
+
+        rb.AddForce(velocityDrag, ForceMode.Acceleration);
+    }
+
+    // Update is called once per frame
+    void FixedUpdate()
+    {
+        if (canMove)
         {
-            transform.position = new Vector3(transform.position.x - (Time.deltaTime * 2f), transform.position.y, -19f);
+            float horizontalInput = Input.GetAxisRaw("Horizontal");
+            
+            if (horizontalInput != 0)
+            {
+                rb.AddForce(Vector3.right * horizontalInput * movementSpeed, ForceMode.Acceleration);
+
+                LimitVelocity();
+            }
+            else
+                ApplyDrag();
+
+            //if (Input.GetKey(KeyCode.D))
+            //{
+            //    rb.AddForce(transform.right * movementSpeed, ForceMode.Acceleration);
+            //}
+            //if (Input.GetKey(KeyCode.A))
+            //{ 
+            //    rb.AddForce(-transform.right * movementSpeed, ForceMode.Acceleration);
+            //}
+            //if (Input.GetKey(KeyCode.Space))
+            //{
+            //    rb.AddForce(Vector3.up * jumpHeight, ForceMode.Impulse);
+            //    //transform.position = new Vector3(transform.position.x, transform.position.y + (Time.deltaTime * jumpHeight), -19f);
+            //}
         }
-        if (Input.GetKey(KeyCode.Space))
-        {
-            transform.position = new Vector3(transform.position.x, transform.position.y + (Time.deltaTime * jumpHeight), -19f);
-        }
-        Debug.Log(jumpHeight);
+        transform.position = new Vector3(transform.position.x, transform.position.y, -19f);
     }
 
     public void setJumpHeight(float newHeight)
     {
         jumpHeight = Mathf.Clamp(newHeight, 2f, 150f);
+    }
+
+    public void setMove(bool move)
+    {
+        canMove = move;
     }
 }

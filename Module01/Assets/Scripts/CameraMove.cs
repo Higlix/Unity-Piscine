@@ -51,7 +51,6 @@ public class CameraMove : MonoBehaviour
             players[2] = player3GO.GetComponent<Transform>();
             PlayerController3 = player3GO.GetComponent<PlayerMovement>();
         }
-        PlayerController2.Start();
         transform.position = new Vector3(-16f, 7.5f, -27f);
     }
 
@@ -71,9 +70,9 @@ public class CameraMove : MonoBehaviour
             //    Time.deltaTime * movementSpeed
             //);
             currentPlayer = playerID.Player1;
-            PlayerController1.enabled = true;
-            PlayerController2.enabled = false;
-            PlayerController3.enabled = false;
+            PlayerController1.setMove(true);
+            PlayerController2.setMove(false);
+            PlayerController3.setMove(false);
             PlayerController1.setJumpHeight(2f);
         }
         if (Input.GetKeyDown(player2))
@@ -84,9 +83,9 @@ public class CameraMove : MonoBehaviour
             //    Time.deltaTime * movementSpeed
             //);
             currentPlayer = playerID.Player2;
-            PlayerController1.enabled = false;
-            PlayerController2.enabled = true;
-            PlayerController3.enabled = false;
+            PlayerController1.setMove(false);
+            PlayerController2.setMove(true);
+            PlayerController3.setMove(false);
             PlayerController2.setJumpHeight(5f);
         }
         if (Input.GetKeyDown(player3))
@@ -97,9 +96,9 @@ public class CameraMove : MonoBehaviour
             //    Time.deltaTime * movementSpeed
             //);
             currentPlayer = playerID.Player3;
-            PlayerController1.enabled = false;
-            PlayerController2.enabled = false;
-            PlayerController3.enabled = true;
+            PlayerController1.setMove(false);
+            PlayerController2.setMove(false);
+            PlayerController3.setMove(true);
             PlayerController3.setJumpHeight(3f);
         }
         if (currentPlayer != playerID.PlayerNone)
