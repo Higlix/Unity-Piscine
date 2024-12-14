@@ -7,8 +7,9 @@ public class PlayerMovement : MonoBehaviour
     private float jumpHeight;
 
     Rigidbody rb;
-    void Start()
+    public void Start()
     {
+        Debug.Log("Start()");
         jumpHeight = 2f;
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
@@ -29,10 +30,11 @@ public class PlayerMovement : MonoBehaviour
         {
             transform.position = new Vector3(transform.position.x, transform.position.y + (Time.deltaTime * jumpHeight), -19f);
         }
+        Debug.Log(jumpHeight);
     }
 
-    public void setJumpHeight(float jumpHeight)
+    public void setJumpHeight(float newHeight)
     {
-        jumpHeight = Mathf.Clamp(jumpHeight, 2f, 5f);
+        jumpHeight = Mathf.Clamp(newHeight, 2f, 150f);
     }
 }
