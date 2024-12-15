@@ -10,6 +10,7 @@ public class PlayerMovement : MonoBehaviour
     private float movementSpeed;
     private float maxSpeed;
     private float dragForce = 20f;
+    private bool pushed = false;
     public int ID = -1;
     public bool canMove = false;
     Rigidbody rb;
@@ -23,40 +24,44 @@ public class PlayerMovement : MonoBehaviour
         rb.freezeRotation = true;
     }
 
-    private void LimitVelocity()
+    private void LimitVelocity(Rigidbody rigb)
     {
-        Vector3 horizontalVelocity = new Vector3(rb.linearVelocity.x, 0, 0);
+        Vector3 horizontalVelocity = new Vector3(rigb.linearVelocity.x, 0, 0);
 
         if (Mathf.Abs(horizontalVelocity.x) > maxSpeed)
         {
             float limitedVelocity = Mathf.Sign(horizontalVelocity.x) * maxSpeed;
-            rb.linearVelocity = new Vector3(limitedVelocity, rb.linearVelocity.y, rb.linearVelocity.z);
+            rigb.linearVelocity = new Vector3(limitedVelocity, rigb.linearVelocity.y, rigb.linearVelocity.z);
         }
     }
 
-    private void ApplyDrag()
+    private void ApplyDrag(Rigidbody rigb)
     {
-        Vector3 velocityDrag = -new Vector3(rb.linearVelocity.x, 0, 0) * dragForce;
+        Vector3 velocityDrag = -new Vector3(rigb.linearVelocity.x, 0, 0) * dragForce;
 
-        rb.AddForce(velocityDrag, ForceMode.Acceleration);
+        rigb.AddForce(velocityDrag, ForceMode.Acceleration);
+    }
+
+    private void HandleMovement(Rigidbody rigb)
+    {
+        float horizontalInput = Input.GetAxisRaw("Horizontal");
+
+        if (horizontalInput != 0)
+        {
+            rigb.AddForce(transform.right * horizontalInput * movementSpeed, ForceMode.Acceleration);
+
+            LimitVelocity(rigb);
+        }
+        else
+            ApplyDrag(rigb);
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (canMove)
+        if (canMove)    
         {
-            rb.WakeUp();
-            float horizontalInput = Input.GetAxisRaw("Horizontal");
-
-            if (horizontalInput != 0)
-            {
-                rb.AddForce(transform.right * horizontalInput * movementSpeed, ForceMode.Acceleration);
-
-                LimitVelocity();
-            }
-            else
-                ApplyDrag();
+            HandleMovement(rb);
 
             //if (Input.GetKey(KeyCode.D))
             //{
@@ -89,8 +94,11 @@ public class PlayerMovement : MonoBehaviour
         PlayerMovement otherCharacter = collision.gameObject.GetComponent<PlayerMovement>();
         if (otherCharacter != null)
         {
-            if (!otherCharacter.canMove && !this.canMove)
+            if (canMove)
+                otherCharacter.pushed = true;
+            if (otherCharacter.pushed && !canMove)
             {
+                pushed = true;
                 givePush(otherCharacter);
             }
         }
