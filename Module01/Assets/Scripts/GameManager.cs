@@ -11,7 +11,7 @@ public enum PlayerID
     Player3 = 2,
 }
 
-public class Player
+public struct Player
 {
     public GameObject player;
     public KeyCode KeyID;
@@ -68,7 +68,6 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         HandleInput();
-        Debug.Log("ALKSDLAKJSD");
     }
     private void HandleInput()
     {
@@ -99,7 +98,6 @@ public class GameManager : MonoBehaviour
                 players[(int)currentPlayer].transform.position.x,
                 players[(int)currentPlayer].transform.position.y
             );
-            
         }
         //transform.position = new Vector3(players[(int)currentPlayer].position.x, players[(int)currentPlayer].position.y + yOffSet, -19f);
     }

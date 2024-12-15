@@ -269,9 +269,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d70d6562d8a723c41a6bb41dc8ac0055, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player1GO: {fileID: 1450514538}
-  player2GO: {fileID: 1948242220}
-  player3GO: {fileID: 794888494}
   yOffSet: 3
 --- !u!1 &410087039
 GameObject:
@@ -364,13 +361,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 410087039}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.2694861, y: -0.18076722, z: 0.3518944, w: 0.8779925}
+  m_LocalRotation: {x: 0.4430488, y: -0.79550093, z: 0.012655513, w: 0.41318995}
   m_LocalPosition: {x: -1.05, y: 3.81, z: 0.7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 36.901, y: -9.194, z: 40.608}
+  m_LocalEulerAnglesHint: {x: 22.722, y: -135.53, z: -48.839}
 --- !u!114 &410087042
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -426,6 +423,7 @@ MonoBehaviour:
   p1GameObject: {fileID: 1450514538}
   p2GameObject: {fileID: 794888494}
   p3GameObject: {fileID: 1948242220}
+  cam: {fileID: 330585548}
 --- !u!4 &657692491
 Transform:
   m_ObjectHideFlags: 0
@@ -435,7 +433,7 @@ Transform:
   m_GameObject: {fileID: 657692489}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -14.84049, y: 1.5497307, z: -12.195404}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
