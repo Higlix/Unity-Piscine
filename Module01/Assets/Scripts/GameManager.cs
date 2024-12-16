@@ -18,6 +18,7 @@ public struct Player
     public PlayerID ID;
     public Transform transform;
     public PlayerMovement controller;
+    public Vector3 startingPosition;
 }
 
 public class GameManager : MonoBehaviour
@@ -45,6 +46,7 @@ public class GameManager : MonoBehaviour
             players[0].ID = PlayerID.Player1;
             players[0].transform = p1GameObject.GetComponent<Transform>();
             players[0].controller = p1GameObject.GetComponent<PlayerMovement>();
+            players[0].startingPosition = new Vector3(-18f, 6f, -19f);
         }
         if (p2GameObject)
         {
@@ -53,6 +55,7 @@ public class GameManager : MonoBehaviour
             players[1].ID = PlayerID.Player2;
             players[1].transform = p2GameObject.GetComponent<Transform>();
             players[1].controller = p2GameObject.GetComponent<PlayerMovement>();
+            players[1].startingPosition = new Vector3(-15f, 6f, -19f);
         }
         if (p3GameObject)
         {
@@ -61,6 +64,7 @@ public class GameManager : MonoBehaviour
             players[2].ID = PlayerID.Player3;
             players[2].transform = p3GameObject.GetComponent<Transform>();
             players[2].controller = p3GameObject.GetComponent<PlayerMovement>();
+            players[2].startingPosition = new Vector3(-13f, 6f, -19f);
         }
     }
 
@@ -98,6 +102,12 @@ public class GameManager : MonoBehaviour
                 players[(int)currentPlayer].transform.position.x,
                 players[(int)currentPlayer].transform.position.y
             );
+        }
+        if (Input.GetKeyDown(KeyCode.R) || Input.GetKeyDown(KeyCode.Backspace))
+        {
+            players[(int)PlayerID.Player1].transform.position = players[(int)PlayerID.Player1].startingPosition;
+            players[(int)PlayerID.Player2].transform.position = players[(int)PlayerID.Player2].startingPosition;
+            players[(int)PlayerID.Player3].transform.position = players[(int)PlayerID.Player3].startingPosition;
         }
         //transform.position = new Vector3(players[(int)currentPlayer].position.x, players[(int)currentPlayer].position.y + yOffSet, -19f);
     }

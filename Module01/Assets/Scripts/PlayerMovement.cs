@@ -10,10 +10,16 @@ public class PlayerMovement : MonoBehaviour
     private float movementSpeed;
     private float maxSpeed;
     private float dragForce = 20f;
-    private bool pushed = false;
-    public int ID = -1;
-    public bool canMove = false;
+    private bool canMove = false;
     Rigidbody rb;
+
+    [Header("Name")]
+    public string Name;
+    
+    
+    public PlayerID playerID;
+
+
     public void Start()
     {
         Debug.Log("Start()");
@@ -54,6 +60,10 @@ public class PlayerMovement : MonoBehaviour
         }
         else
             ApplyDrag(rigb);
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            rigb.AddForce(transform.up * jumpHeight, ForceMode.Impulse);
+        }
     }
 
     // Update is called once per frame
@@ -77,15 +87,14 @@ public class PlayerMovement : MonoBehaviour
             //    //transform.position = new Vector3(transform.position.x, transform.position.y + (Time.deltaTime * jumpHeight), -19f);
             //}
         }
+        else
+            ApplyDrag(rb);
         transform.position = new Vector3(transform.position.x, transform.position.y, -19f);
     }
 
     private void givePush(PlayerMovement otherCharacter)
     {
-        float horizontalInput = Input.GetAxisRaw("Horizontal");
-
-        if (horizontalInput != 0)
-            otherCharacter.rb.AddForce(transform.right * horizontalInput * movementSpeed, ForceMode.Acceleration);
+        HandleMovement(otherCharacter.rb);
 
     }
 
@@ -94,19 +103,11 @@ public class PlayerMovement : MonoBehaviour
         PlayerMovement otherCharacter = collision.gameObject.GetComponent<PlayerMovement>();
         if (otherCharacter != null)
         {
-            if (canMove)
-                otherCharacter.pushed = true;
-            if (otherCharacter.pushed && !canMove)
+            if (!canMove)
             {
-                pushed = true;
                 givePush(otherCharacter);
             }
         }
-    }
-
-    public void setID(int id)
-    {
-        ID = id;
     }
 
     public void setJumpHeight(float newHeight)

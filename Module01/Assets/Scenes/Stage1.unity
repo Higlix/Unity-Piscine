@@ -421,8 +421,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   p1GameObject: {fileID: 1450514538}
-  p2GameObject: {fileID: 794888494}
-  p3GameObject: {fileID: 1948242220}
+  p2GameObject: {fileID: 1948242220}
+  p3GameObject: {fileID: 794888494}
   cam: {fileID: 330585548}
 --- !u!4 &657692491
 Transform:
@@ -577,7 +577,7 @@ Transform:
   m_GameObject: {fileID: 794888494}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -13.550052, y: 4.824401, z: -19}
+  m_LocalPosition: {x: -13, y: 6, z: -19}
   m_LocalScale: {x: 0.5, y: 2, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -681,9 +681,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!114 &794888500
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -698,6 +698,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ID: -1
   canMove: 0
+  Name: John
+  playerID: 2
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -885,7 +887,7 @@ Transform:
   m_GameObject: {fileID: 1450514538}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -18.36, y: 5.414401, z: -19}
+  m_LocalPosition: {x: -18, y: 6, z: -19}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -989,9 +991,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!114 &1450514544
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1006,6 +1008,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ID: -1
   canMove: 0
+  Name: Claire
+  playerID: 0
 --- !u!1 &1641200928
 GameObject:
   m_ObjectHideFlags: 0
@@ -1288,8 +1292,8 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1450514539}
-  - {fileID: 794888495}
   - {fileID: 1948242221}
+  - {fileID: 794888495}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1948242220
@@ -1322,7 +1326,7 @@ Transform:
   m_GameObject: {fileID: 1948242220}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -15.67, y: 4.364401, z: -19}
+  m_LocalPosition: {x: -15, y: 6, z: -19}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1426,9 +1430,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!114 &1948242226
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1443,6 +1447,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ID: -1
   canMove: 0
+  Name: Thomas
+  playerID: 1
 --- !u!1 &2113427156
 GameObject:
   m_ObjectHideFlags: 0
