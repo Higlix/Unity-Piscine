@@ -10,7 +10,6 @@ public enum PlayerID
     Player2 = 1,
     Player3 = 2,
 }
-
 public struct Player
 {
     public GameObject player;
@@ -19,6 +18,7 @@ public struct Player
     public Transform transform;
     public PlayerMovement controller;
     public Vector3 startingPosition;
+    
 }
 
 public class GameManager : MonoBehaviour
@@ -38,7 +38,6 @@ public class GameManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        Debug.Log("START()");
         if (p1GameObject)
         {
             players[0].player = p1GameObject;

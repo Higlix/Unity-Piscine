@@ -6,26 +6,29 @@ public class PlayerMovement : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
-    private float jumpHeight;
-    private float movementSpeed;
-    private float maxSpeed;
-    private float dragForce = 20f;
-    private bool canMove = false;
-    Rigidbody rb;
+    [Header("Player Jump Height")]
+    public float jumpHeight;
 
-    [Header("Name")]
+    [Header("Player Movement Speed")]
+    public float movementSpeed;
+
+    [Header("Player Max Speed")]
+    public float maxSpeed;
+
+    [Header("Player Drag Force")]
+    public float dragForce;
+
+    [Header("Name and ID")]
     public string Name;
-    
-    
     public PlayerID playerID;
 
 
+    bool isGrounded = false;
+    bool canMove = false;
+    Rigidbody rb;
+
     public void Start()
     {
-        Debug.Log("Start()");
-        jumpHeight = 6f;
-        movementSpeed = 25f;
-        maxSpeed = 25f;
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
     }
@@ -60,10 +63,18 @@ public class PlayerMovement : MonoBehaviour
         }
         else
             ApplyDrag(rigb);
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKey(KeyCode.Space) && isGrounded && canMove)
         {
             rigb.AddForce(transform.up * jumpHeight, ForceMode.Impulse);
+            isGrounded = false;
         }
+    }
+
+    void Update()
+    {
+        Debug.Log(name);
+        Debug.Log("Movement Speed: " + movementSpeed);
+        Debug.Log("Jump Height: " + jumpHeight);
     }
 
     // Update is called once per frame
@@ -73,6 +84,12 @@ public class PlayerMovement : MonoBehaviour
         {
             HandleMovement(rb);
 
+            //float horizontalInput = Input.GetAxisRaw("Horizontal");
+
+            //Vector3 direction = new Vector3(horizontalInput, 0, 0);
+
+            //transform.Translate(direction * movementSpeed * Time.deltaTime);
+        
             //if (Input.GetKey(KeyCode.D))
             //{
             //    rb.Move(new Vector3(transform.position.x + (Time.deltaTime * movementSpeed), transform.position.y, -19f), rb.rotation);
@@ -86,6 +103,7 @@ public class PlayerMovement : MonoBehaviour
             //    rb.AddForce(Vector3.up * jumpHeight, ForceMode.Impulse);
             //    //transform.position = new Vector3(transform.position.x, transform.position.y + (Time.deltaTime * jumpHeight), -19f);
             //}
+
         }
         else
             ApplyDrag(rb);
@@ -95,7 +113,6 @@ public class PlayerMovement : MonoBehaviour
     private void givePush(PlayerMovement otherCharacter)
     {
         HandleMovement(otherCharacter.rb);
-
     }
 
     private void OnCollisionStay(Collision collision)
@@ -108,13 +125,11 @@ public class PlayerMovement : MonoBehaviour
                 givePush(otherCharacter);
             }
         }
+        if (collision.gameObject.layer == 10)
+        {
+            isGrounded = true; 
+        }
     }
-
-    public void setJumpHeight(float newHeight)
-    {
-        jumpHeight = Mathf.Clamp(newHeight, 2f, 150f);
-    }
-
     public void setMove(bool move)
     {
         canMove = move;

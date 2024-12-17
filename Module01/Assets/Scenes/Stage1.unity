@@ -696,8 +696,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 686d38f96a1e660499cf8bf1c3d25f72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ID: -1
-  canMove: 0
+  jumpHeight: 6
+  movementSpeed: 25
+  maxSpeed: 30
+  dragForce: 10
   Name: John
   playerID: 2
 --- !u!1 &832575517
@@ -1006,8 +1008,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 686d38f96a1e660499cf8bf1c3d25f72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ID: -1
-  canMove: 0
+  jumpHeight: 2
+  movementSpeed: 15
+  maxSpeed: 20
+  dragForce: 10
   Name: Claire
   playerID: 0
 --- !u!1 &1641200928
@@ -1022,7 +1026,7 @@ GameObject:
   - component: {fileID: 1641200932}
   - component: {fileID: 1641200931}
   - component: {fileID: 1641200930}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1445,8 +1449,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 686d38f96a1e660499cf8bf1c3d25f72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ID: -1
-  canMove: 0
+  jumpHeight: 4
+  movementSpeed: 20
+  maxSpeed: 25
+  dragForce: 10
   Name: Thomas
   playerID: 1
 --- !u!1 &2113427156
