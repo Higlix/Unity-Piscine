@@ -112,7 +112,13 @@ public class PlayerMovement : MonoBehaviour
 
     private void givePush(PlayerMovement otherCharacter)
     {
-        HandleMovement(otherCharacter.rb);
+        //HandleMovement(otherCharacter.rb);
+        Rigidbody otherRb = otherCharacter.rb;
+        float horizontalInput = Input.GetAxisRaw("Horizontal");
+        if (otherRb != null && horizontalInput != 0)
+        {
+            otherRb.AddForce(transform.right * horizontalInput * movementSpeed, ForceMode.Force);
+        }
     }
 
     private void OnCollisionStay(Collision collision)
