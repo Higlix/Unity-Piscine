@@ -117,7 +117,7 @@ public class PlayerMovement : MonoBehaviour
         float horizontalInput = Input.GetAxisRaw("Horizontal");
         if (otherRb != null && horizontalInput != 0)
         {
-            otherRb.AddForce(transform.right * horizontalInput * movementSpeed, ForceMode.Force);
+            otherRb.AddForce(transform.right * horizontalInput * movementSpeed, ForceMode.Acceleration);
         }
     }
 
