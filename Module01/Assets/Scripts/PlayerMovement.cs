@@ -25,6 +25,8 @@ public class PlayerMovement : MonoBehaviour
     int GroundLayer = 10;
     int WallLayer = 11;
 
+    int direction = 1;
+
     bool isGrounded = false;
     bool canMove = false;
     Rigidbody rb;
@@ -72,14 +74,25 @@ public class PlayerMovement : MonoBehaviour
 
             LimitVelocity(rigb);
         }
-        //else
-            //ApplyDrag(rigb);
-        if (Input.GetKey(KeyCode.Space) && isGrounded)
+        else
+            ApplyDrag(rigb);
+
+        if (Input.GetKey(KeyCode.Space) && isGrounded) 
         {
             rigb.AddForce(Vector3.up * jumpHeight, ForceMode.Impulse);
         }
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.F1))
+        {
+            Debug.Log("Direction -> " + direction);
+            Debug.Log("CanMoveLeft -> " + canMoveLeft);
+            Debug.Log("CanMoveRight -> " + canMoveRight);
+            Debug.Log("IsGrounded -> " + isGrounded);
+        }
+    }
     // Update is called once per frame
     void FixedUpdate()
     {
@@ -87,18 +100,45 @@ public class PlayerMovement : MonoBehaviour
         {
             HandleMovement(rb);
         }
+        if (!isGrounded)
+        {
+            rb.AddForce(Vector3.down * Time.fixedDeltaTime * 1000f, ForceMode.Acceleration);
+        }
     }
 
     private void OnCollisionExit(Collision collision)
     {
         if (collision.gameObject.layer == GroundLayer)
         {
+            Debug.Log("Exit");
             isGrounded = false;
         }
         if (collision.gameObject.layer == WallLayer)
         {
+            Debug.Log("Exit");
             canMoveRight = true;
             canMoveLeft = true;
+        }
+    }
+
+    private void OnCollisionStay(Collision collision)
+    {
+        if (collision.gameObject.layer == GroundLayer)
+        {
+            isGrounded = true;
+        }
+        if (collision.gameObject.layer == WallLayer)
+        {
+            if (direction < 0)
+            {
+                canMoveLeft = false;
+                canMoveRight = true;
+            }
+            else if (direction > 0) 
+            {
+                canMoveRight = false;
+                canMoveLeft = true;
+            }
         }
     }
 
@@ -106,22 +146,15 @@ public class PlayerMovement : MonoBehaviour
     {
         if (collision.gameObject.layer == GroundLayer)
         {
+            Debug.Log("Enter");
             isGrounded = true; 
         }
         if (collision.gameObject.layer == WallLayer)
         {
-            float horizontalInput = Input.GetAxisRaw("Horizontal");
-            Debug.Log(horizontalInput);
-            if (horizontalInput < 0)
-            {
-                canMoveLeft = false;
-                canMoveRight = true;
-            }
-            else if (horizontalInput > 0)
-            {
-                canMoveRight = false;
-                canMoveLeft = true;
-            }
+            Debug.Log("Enter");
+            Vector2 dir = collision.GetContact(0).normal;
+            direction = (int )(-dir.x);
+            rb.linearVelocity = Vector3.zero;
         }
     }
     public void setMove(bool move)
