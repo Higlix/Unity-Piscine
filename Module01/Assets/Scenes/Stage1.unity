@@ -451,7 +451,7 @@ GameObject:
   - component: {fileID: 761629983}
   - component: {fileID: 761629982}
   - component: {fileID: 761629981}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Wall_Left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -567,7 +567,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &794888495
 Transform:
   m_ObjectHideFlags: 0
@@ -667,7 +667,7 @@ Rigidbody:
   serializedVersion: 4
   m_Mass: 1
   m_Drag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 500
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -682,8 +682,8 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 1
-  m_Constraints: 0
-  m_CollisionDetection: 1
+  m_Constraints: 8
+  m_CollisionDetection: 0
 --- !u!114 &794888500
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -696,10 +696,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 686d38f96a1e660499cf8bf1c3d25f72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jumpHeight: 6
-  movementSpeed: 25
-  maxSpeed: 30
-  dragForce: 10
+  jumpHeight: 5
+  movementSpeed: 35
+  maxSpeed: 40
+  dragForce: 20
   Name: John
   playerID: 2
 --- !u!1 &832575517
@@ -763,7 +763,7 @@ GameObject:
   - component: {fileID: 1420750563}
   - component: {fileID: 1420750562}
   - component: {fileID: 1420750561}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Wall_Right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -979,7 +979,7 @@ Rigidbody:
   serializedVersion: 4
   m_Mass: 1
   m_Drag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 5
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -994,8 +994,8 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 1
-  m_Constraints: 0
-  m_CollisionDetection: 1
+  m_Constraints: 8
+  m_CollisionDetection: 0
 --- !u!114 &1450514544
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1009,9 +1009,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   jumpHeight: 2
-  movementSpeed: 15
+  movementSpeed: 20
   maxSpeed: 20
-  dragForce: 10
+  dragForce: 20
   Name: Claire
   playerID: 0
 --- !u!1 &1641200928
@@ -1320,7 +1320,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1948242221
 Transform:
   m_ObjectHideFlags: 0
@@ -1420,7 +1420,7 @@ Rigidbody:
   serializedVersion: 4
   m_Mass: 1
   m_Drag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 5
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -1435,8 +1435,8 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 1
-  m_Constraints: 0
-  m_CollisionDetection: 1
+  m_Constraints: 8
+  m_CollisionDetection: 0
 --- !u!114 &1948242226
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1450,9 +1450,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   jumpHeight: 4
-  movementSpeed: 20
-  maxSpeed: 25
-  dragForce: 10
+  movementSpeed: 25
+  maxSpeed: 30
+  dragForce: 20
   Name: Thomas
   playerID: 1
 --- !u!1 &2113427156

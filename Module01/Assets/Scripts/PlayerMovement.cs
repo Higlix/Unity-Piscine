@@ -22,10 +22,15 @@ public class PlayerMovement : MonoBehaviour
     public string Name;
     public PlayerID playerID;
 
+    int GroundLayer = 10;
+    int WallLayer = 11;
 
     bool isGrounded = false;
     bool canMove = false;
     Rigidbody rb;
+
+    bool canMoveLeft = true;
+    bool canMoveRight = true;
 
     public void Start()
     {
@@ -48,92 +53,75 @@ public class PlayerMovement : MonoBehaviour
     {
         Vector3 velocityDrag = -new Vector3(rigb.linearVelocity.x, 0, 0) * dragForce;
 
-        rigb.AddForce(velocityDrag, ForceMode.Acceleration);
+        rigb.AddForce(velocityDrag, ForceMode.Force);
     }
 
     private void HandleMovement(Rigidbody rigb)
     {
         float horizontalInput = Input.GetAxisRaw("Horizontal");
 
-        if (horizontalInput != 0)
+        if (horizontalInput < 0 && canMoveLeft)
         {
-            rigb.AddForce(transform.right * horizontalInput * movementSpeed, ForceMode.Acceleration);
+            rigb.AddForce(transform.right * horizontalInput * movementSpeed, ForceMode.Force);
 
             LimitVelocity(rigb);
         }
-        else
-            ApplyDrag(rigb);
-        if (Input.GetKey(KeyCode.Space) && isGrounded && canMove)
+        else if (horizontalInput > 0 && canMoveRight)
         {
-            rigb.AddForce(transform.up * jumpHeight, ForceMode.Impulse);
-            isGrounded = false;
-        }
-    }
+            rigb.AddForce(transform.right * horizontalInput * movementSpeed, ForceMode.Force);
 
-    void Update()
-    {
-        Debug.Log(name);
-        Debug.Log("Movement Speed: " + movementSpeed);
-        Debug.Log("Jump Height: " + jumpHeight);
+            LimitVelocity(rigb);
+        }
+        //else
+            //ApplyDrag(rigb);
+        if (Input.GetKey(KeyCode.Space) && isGrounded)
+        {
+            rigb.AddForce(Vector3.up * jumpHeight, ForceMode.Impulse);
+        }
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (canMove)    
+        if (canMove)
         {
             HandleMovement(rb);
-
-            //float horizontalInput = Input.GetAxisRaw("Horizontal");
-
-            //Vector3 direction = new Vector3(horizontalInput, 0, 0);
-
-            //transform.Translate(direction * movementSpeed * Time.deltaTime);
-        
-            //if (Input.GetKey(KeyCode.D))
-            //{
-            //    rb.Move(new Vector3(transform.position.x + (Time.deltaTime * movementSpeed), transform.position.y, -19f), rb.rotation);
-            //}
-            //if (Input.GetKey(KeyCode.A))
-            //{
-            //    rb.Move(new Vector3(transform.position.x - (Time.deltaTime * movementSpeed), transform.position.y, -19f), rb.rotation);
-            //}
-            //if (Input.GetKey(KeyCode.Space))
-            //{
-            //    rb.AddForce(Vector3.up * jumpHeight, ForceMode.Impulse);
-            //    //transform.position = new Vector3(transform.position.x, transform.position.y + (Time.deltaTime * jumpHeight), -19f);
-            //}
-
-        }
-        else
-            ApplyDrag(rb);
-        transform.position = new Vector3(transform.position.x, transform.position.y, -19f);
-    }
-
-    private void givePush(PlayerMovement otherCharacter)
-    {
-        //HandleMovement(otherCharacter.rb);
-        Rigidbody otherRb = otherCharacter.rb;
-        float horizontalInput = Input.GetAxisRaw("Horizontal");
-        if (otherRb != null && horizontalInput != 0)
-        {
-            otherRb.AddForce(transform.right * horizontalInput * movementSpeed, ForceMode.Acceleration);
         }
     }
 
-    private void OnCollisionStay(Collision collision)
+    private void OnCollisionExit(Collision collision)
     {
-        PlayerMovement otherCharacter = collision.gameObject.GetComponent<PlayerMovement>();
-        if (otherCharacter != null)
+        if (collision.gameObject.layer == GroundLayer)
         {
-            if (!canMove)
-            {
-                givePush(otherCharacter);
-            }
+            isGrounded = false;
         }
-        if (collision.gameObject.layer == 10)
+        if (collision.gameObject.layer == WallLayer)
+        {
+            canMoveRight = true;
+            canMoveLeft = true;
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.layer == GroundLayer)
         {
             isGrounded = true; 
+        }
+        if (collision.gameObject.layer == WallLayer)
+        {
+            float horizontalInput = Input.GetAxisRaw("Horizontal");
+            Debug.Log(horizontalInput);
+            if (horizontalInput < 0)
+            {
+                canMoveLeft = false;
+                canMoveRight = true;
+            }
+            else if (horizontalInput > 0)
+            {
+                canMoveRight = false;
+                canMoveLeft = true;
+            }
         }
     }
     public void setMove(bool move)
